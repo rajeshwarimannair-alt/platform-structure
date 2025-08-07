@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - SkillLearn</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f0f4f7;
+    }
+    header {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #4caf50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .lesson-list {
+      margin-top: 30px;
+    }
+    .lesson-card {
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+    }
+    .lesson-card h4 {
+      margin: 0 0 10px;
+    }
+    .actions button {
+      background: #f44336;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Admin Panel - SkillLearn</h1>
+    <p>Manage Lessons and Quizzes</p>
+  </header>
+
+  <div class="container">
+
+    <!-- Add New Lesson -->
+    <h2>Add New Lesson</h2>
+    <form id="lessonForm">
+      <input type="text" id="lessonTitle" placeholder="Lesson Title" required />
+      <input type="text" id="lessonCategory" placeholder="Category (e.g., Excel, JS)" required />
+      <input type="text" id="videoURL" placeholder="Video URL (optional)" />
+      <textarea id="lessonContent" rows="4" placeholder="Lesson Content (text)" required></textarea>
+      
+      <h3>Quiz (1 Question)</h3>
+      <input type="text" id="quizQuestion" placeholder="Question" required />
+      <input type="text" id="option1" placeholder="Option 1" required />
+      <input type="text" id="option2" placeholder="Option 2" required />
+      <input type="text" id="option3" placeholder="Option 3" required />
+      <input type="text" id="option4" placeholder="Option 4" required />
+      <select id="correctAnswer" required>
+        <option value="">Select Correct Answer</option>
+        <option value="0">Option 1</option>
+        <option value="1">Option 2</option>
+        <option value="2">Option 3</option>
+        <option value="3">Option 4</option>
+      </select>
+
+      <button type="submit">Add Lesson</button>
+    </form>
+
+    <!-- List of Lessons -->
+    <div class="lesson-list" id="lessonList">
+      <h2>Existing Lessons</h2>
+      <!-- Dynamically added lesson cards -->
+    </div>
+  </div>
+
+  <script>
+    const lessonForm = document.getElementById('lessonForm');
+    const lessonList = document.getElementById('lessonList');
+    let lessons = [];
+
+    lessonForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const newLesson = {
+        title: document.getElementById('lessonTitle').value,
+        category: document.getElementById('lessonCategory').value,
+        video: document.getElementById('videoURL').value,
+        content: document.getElementById('lessonContent').value,
+        quiz: {
+          question: document.getElementById('quizQuestion').value,
+          options: [
+            document.getElementById('option1').value,
+            document.getElementById('option2').value,
+            document.getElementById('option3').value,
+            document.getElementById('option4').value
+          ],
+          answer: parseInt(document.getElementById('correctAnswer').value)
+        }
+      };
+
+      lessons.push(newLesson);
+      displayLessons();
+      lessonForm.reset();
+    });
+
+    function displayLessons() {
+      lessonList.innerHTML = '<h2>Existing Lessons</h2>';
+      lessons.forEach((lesson, index) => {
+        const card = document.createElement('div');
+        card.className = 'lesson-card';
+        card.innerHTML = `
+          <h4>${lesson.title} (${lesson.category})</h4>
+          <p>${lesson.content}</p>
+          <p><strong>Quiz:</strong> ${lesson.quiz.question}</p>
+          <div class="actions">
+            <button onclick="deleteLesson(${index})">Delete</button>
+          </div>
+        `;
+        lessonList.appendChild(card);
+      });
+    }
+
+    function deleteLesson(index) {
+      if (confirm("Are you sure you want to delete this lesson?")) {
+        lessons.splice(index, 1);
+        displayLessons();
+      }
+    }
+  </script>
+
+</body>
+</html>
