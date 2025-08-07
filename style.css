@@ -1,0 +1,34 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f0f4f7;
+  color: #333;
+}
+header {
+  background: #4caf50;
+  color: white;
+  padding: 2em;
+  text-align: center;
+}
+.btn {
+  background: white;
+  color: #4caf50;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.skills {
+  padding: 2em;
+}
+.skill-grid {
+  display: flex;
+  gap: 1em;
+}
+.card {
+  background: white;
+  padding: 1em;
+  border-radius: 8px;
+  flex: 1;
+  text-align: center;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
