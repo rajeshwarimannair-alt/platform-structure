@@ -1,8 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Certificate - SkillLearn</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 40px;
+    }
+    .certificate-box {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 50px;
+      border: 8px solid #4caf50;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .certificate-box h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+    .certificate-box h2 {
+      font-size: 24px;
+      margin: 30px 0 10px;
+      font-weight: normal;
+    }
+    .certificate-box p {
+      font-size: 20px;
+      margin: 20px 0;
+    }
+    .name {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+    }
+    .date {
+      font-size: 16px;
+      margin-top: 30px;
+      color: #555;
+    }
+    .btn-print {
+      margin-top: 30px;
+      padding: 12px 25px;
+      font-size: 16px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    @media print {
+      .btn-print {
+        display: none;
+      }
+    }
+  </style>
+</head>
 <body>
-  <div class="certificate">
+
+  <div class="certificate-box">
     <h1>Certificate of Completion</h1>
-    <p>This certifies that <strong>[User Name]</strong></p>
-    <p>has successfully completed the course: <strong>JavaScript Essentials</strong></p>
-    <p>Date: 07-Aug-2025</p>
+    <h2>This is proudly presented to</h2>
+    <p class="name" id="userName">[Student Name]</p>
+    <p>for successfully completing the lesson:</p>
+    <p class="name" id="lessonName">[Lesson Title]</p>
+    <p class="date" id="dateIssued">Date: </p>
+
+    <button class="btn-print" onclick="window.print()">🖨️ Download / Print Certificate</button>
   </div>
+
+  <script>
+    // Get data from URL (e.g. ?name=Rajeshwari&lesson=JavaScript+Basics)
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get("name") || "Student Name";
+    const lesson = urlParams.get("lesson") || "Lesson Title";
+
+    const today = new Date();
+    const dateString = today.toLocaleDateString("en-IN", {
+      day: "numeric", month: "long", year: "numeric"
+    });
+
+    // Set certificate values
+    document.getElementById("userName").textContent = name;
+    document.getElementById("lessonName").textContent = lesson;
+    document.getElementById("dateIssued").textContent = "Date: " + dateString;
+  </script>
+
 </body>
+</html>
